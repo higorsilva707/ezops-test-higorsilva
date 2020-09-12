@@ -6,7 +6,7 @@
     "test": "\" echo \\\"erro: Nenhum teste especificado \\ \" && exit 1 \"",
     "start": "node server.js"
   },
-  "author": "",
+  "author": "higorsilva707",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
@@ -16,5 +16,13 @@
     "socket.io": "^2.3.0"
   },
   "devDependencies": {},
-  "description": ""
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/higorsilva707/ezops-test-higorsilva.git"
+  },
+  "bugs": {
+    "url": "https://github.com/higorsilva707/ezops-test-higorsilva/issues"
+  },
+  "homepage": "https://github.com/higorsilva707/ezops-test-higorsilva#readme",
+  "description": "teste em nodejs"
 }
