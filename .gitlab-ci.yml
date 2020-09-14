@@ -6,6 +6,7 @@ stages:
 
 # Template de clone 
 .cloneBuild: &cloneBuild 
+- apk install sshpass
 - echo "Removendo as pastas do repo" 
 - sshpass -p $SSH_PASS ssh -o StrictHostKeyChecking=no $SSH_USER@172.65.251.78 "rm -rf ezops-teste-higorsilva" 
 - echo "Clone do repo do apischedulefix" 
