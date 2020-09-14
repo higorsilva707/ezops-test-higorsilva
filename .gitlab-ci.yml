@@ -24,4 +24,6 @@ gitclone:
     - *cloneBuild
   only:
     - /^master$/
+  tags:
+    - docker-ezopsteste
 
