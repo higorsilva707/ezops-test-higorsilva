@@ -11,6 +11,7 @@ stages:
 - echo "Clone do repo do apischedulefix" 
 - git clone https://gitlab.com/higorsilva707/ezops-test-higorsilva.git
 - echo "Entrando na pasta de instalacao do API"
+- pwd  
 - cd /ezops-teste-higorsilva/nodejs/
 - echo "Entrando na pasta de instalacao do API"
 - echo "Build do Dockerfile"
