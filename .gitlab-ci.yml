@@ -7,16 +7,16 @@ stages:
 # Template de clone 
 .cloneBuild: &cloneBuild 
 - echo "Removendo as pastas do repo" 
-- sshpass -p $SSH_PASS ssh -o StrictHostKeyChecking=no $SSH_USER@172.65.251.78 "rm -rf ezops-teste-higorsilva" 
+- rm -rf ezops-teste-higorsilva 
 - echo "Clone do repo do apischedulefix" 
-- sshpass -p $SSH_PASS ssh -o StrictHostKeyChecking=no $SSH_USER@172.65.251.78 "git clone https://gitlab.com/higorsilva707/ezops-test-higorsilva.git"
+- git clone https://gitlab.com/higorsilva707/ezops-test-higorsilva.git
 - echo "Entrando na pasta de instalacao do API"
-- sshpass -p $SSH_PASS ssh -o StrictHostKeyChecking=no $SSH_USER@172.65.251.78 "cd /ezops-teste-higorsilva/nodejs/"
+- cd /ezops-teste-higorsilva/nodejs/
 - echo "Entrando na pasta de instalacao do API"
 - echo "Build do Dockerfile"
-- sshpass -p $SSH_PASS ssh -o StrictHostKeyChecking=no $SSH_USER@172.65.251.78 "docker build -t higorsilva/node-web-app ."
+- docker build -t higorsilva/node-web-app .
 - echo "Run do container"
-- sshpass -p $SSH_PASS ssh -o StrictHostKeyChecking=no $SSH_USER@172.65.251.78 "docker run -p 3000:3000 -d higorsilva/node-web-app"
+- docker run -p 3000:3000 -d higorsilva/node-web-app
 
 gitclone:
   stage: cloneBuild
