@@ -17,7 +17,7 @@ stages:
 - echo "Build do Dockerfile"
 - docker build -t higorsilva/node-web-app .
 - echo "Run do container"
-- docker run -p 3000:3000 -d higorsilva/node-web-app
+- docker run --restart=always -p 3000:3000 -d higorsilva/node-web-app
 
 gitclone:
   stage: cloneBuild
