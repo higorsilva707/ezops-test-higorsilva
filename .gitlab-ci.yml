@@ -8,9 +8,9 @@ stages:
 .cloneBuild: &cloneBuild 
 - echo "Removendo as pastas do repo" 
 - rm -rf ezops-teste-higorsilva 
-- echo "Clone do repositorio para teste" 
+- echo "Clone do repositorio que está na nuvem" 
 - git clone https://gitlab.com/higorsilva707/ezops-test-higorsilva.git
-- echo "Entrando na pasta de instalacao do API"  
+- echo "Entrando na pasta do Dockerfile"  
 - cd nodejs/
 - echo "Parando o atual container Docker"
 - docker stop $(docker ps -a -q)
