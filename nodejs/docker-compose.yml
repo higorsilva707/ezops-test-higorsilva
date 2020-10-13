@@ -21,7 +21,7 @@ services:
     volumes:
       - .:/home/node/simple-chat
 
-  mongodb_container:
+  mongodb:
     image: mongo:latest
     env_file: .env
     environment:
@@ -31,13 +31,13 @@ services:
       - MONGO_PORT=$MONGO_PORT
       - MONGO_DB=$MONGO_DB
     ports:
-            - "27018:27018"
+            - "27018:27017"
     volumes:
             - .:/data/db
               #           - mongodb_data_container:/data/db
 
 
-  webserver:
+  nginx:
     build:
       context: nginx
       dockerfile: Dockerfile
