@@ -8,6 +8,13 @@ services:
     image: higorsilva707/node-web-app
     container_name: nodejs
     restart: unless-stopped
+    ports:
+            - "3000:3000"
+    volumes:
+      - .:/home/node/simple-chat
+     
+  mongodb_container:
+    image: mongo:latest
     env_file: .env
     environment:
       - MONGO_USERNAME=$MONGO_USERNAME
@@ -16,19 +23,5 @@ services:
       - MONGO_PORT=$MONGO_PORT
       - MONGO_DB=$MONGO_DB
     ports:
-            - "3000:3000"
-    volumes:
-      - .:/home/node/simple-chat
-     
-  mongodb_container:
-    image: mongo:latest
-    environment:
-      - MONGO_USERNAME=$MONGO_USERNAME
-      - MONGO_PASSWORD=$MONGO_PASSWORD
-      - MONGO_HOSTNAME=db
-      - MONGO_PORT=$MONGO_PORT
-      - MONGO_DB=$MONGO_DB
-    ports:
-      - 27017:27017
-
+            - "27018:27018"
 
