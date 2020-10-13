@@ -8,20 +8,49 @@ services:
     image: higorsilva707/node-web-app
     container_name: nodejs
     restart: unless-stopped
+    env_file: .env
+    environment:
+      - MONGO_USERNAME=$MONGO_USERNAME
+      - MONGO_PASSWORD=$MONGO_PASSWORD
+      - MONGO_HOSTNAME=$MONGO_HOSTNAME
+      - MONGO_PORT=$MONGO_PORT
+      - MONGO_DB=$MONGO_DB
+
     ports:
             - "3000:3000"
     volumes:
       - .:/home/node/simple-chat
-     
+
   mongodb_container:
     image: mongo:latest
     env_file: .env
     environment:
       - MONGO_USERNAME=$MONGO_USERNAME
       - MONGO_PASSWORD=$MONGO_PASSWORD
-      - MONGO_HOSTNAME=db
+      - MONGO_HOSTNAME=$MONGO_HOSTNAME
       - MONGO_PORT=$MONGO_PORT
       - MONGO_DB=$MONGO_DB
     ports:
             - "27018:27018"
+    volumes:
+            - .:/data/db
+              #           - mongodb_data_container:/data/db
 
+
+  webserver:
+    build:
+      context: nginx
+      dockerfile: Dockerfile
+    image: nginx:latest
+    container_name: webserver
+    restart: unless-stopped
+    environment:
+      APP_ENV: "prod"
+      APP_NAME: "webserver"
+      APP_DEBUG: "true"
+      SERVICE_NAME: "webserver"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - .:/home/higorpsilva/Projects/ezops-test-higorsilva/nodejs/nginx/conf.d
