@@ -39,18 +39,23 @@
   </div>
   <script>
     var socket = io();
-    $(() => {
-      $("#send").click(() => {
-        sendMessage({ name: $("#name").val(), message: $("#message").val() });
-      })
 
-      getMessages()
-    })
+    $(() => {
+		$("#send").click(() => { 
+			sendMessage({
+				name: $("#name").val(), 
+				message: $("#message").val(),
+				type: true
+			});
+		});
+		getMessages();
+	});
 
     $(() => {
       $("#clear").click(() =>{
           deleteMessages()
           location.reload()
+          window.alert('Mensagem apagada!')
         }
       )
     })
@@ -62,17 +67,17 @@
     }
 
     function getMessages() {
-      $.get('http://localhost/messages', (data) => {
+      $.get('http://0.0.0.0/messages', (data) => {
         data.forEach(addMessages);
       })
     }
 
     function sendMessage(message) {
-      $.post('http://localhost/messages', message)
+      $.post('http://0.0.0.0/messages', message)
     }
 
     function deleteMessages() {
-      $.post(`http://localhost/messages/clear`)
+      $.post(`http://0.0.0.0/messages/clear`)
     }
   </script>
 </body>

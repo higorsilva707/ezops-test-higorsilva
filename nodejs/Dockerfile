@@ -8,7 +8,7 @@ COPY package*.json yarn.* ./
 
 USER node
 
-RUN npm ci --only=production
+#RUN npm ci --only=production
 
 COPY --chown=node:node . .
 
