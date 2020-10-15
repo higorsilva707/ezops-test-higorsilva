@@ -14,6 +14,11 @@
     crossorigin="anonymous"></script>
   <script src="/socket.io/socket.io.js"></script>
 </head>
+<style>
+  button {
+    cursor: pointer;
+  }
+</style>
 
 <body>
   <div class="container">
@@ -26,6 +31,7 @@
       <textarea id="message" class="form-control" placeholder="Insira aqui..."></textarea>
       <br>
       <button id="send" class="btn btn-success">Enviar</button>
+      <button id="clear" class="btn btn-danger">Limpar</button>
     </div>
     <div id="messages">
 
@@ -39,6 +45,14 @@
       })
 
       getMessages()
+    })
+
+    $(() => {
+      $("#clear").click(() =>{
+          deleteMessages()
+          location.reload()
+        }
+      )
     })
 
     socket.on('message', addMessages)
@@ -55,6 +69,10 @@
 
     function sendMessage(message) {
       $.post('http://localhost/messages', message)
+    }
+
+    function deleteMessages() {
+      $.post(`http://localhost/messages/clear`)
     }
   </script>
 </body>
