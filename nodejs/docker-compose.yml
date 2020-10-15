@@ -1,56 +1,41 @@
 version: '3'
-
 services:
   nodejs:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: higorsilva707/node-web-app
-    container_name: nodejs
+    build: .
     restart: unless-stopped
     env_file: .env
     environment:
       - MONGO_USERNAME=$MONGO_USERNAME
       - MONGO_PASSWORD=$MONGO_PASSWORD
-      - MONGO_HOSTNAME=$MONGO_HOSTNAME
+      - MONGO_HOSTNAME=mongodb
       - MONGO_PORT=$MONGO_PORT
       - MONGO_DB=$MONGO_DB
-
-    ports:
-            - "3000:3000"
-    volumes:
-      - .:/home/node/simple-chat
-
-  mongodb:
-    image: mongo:latest
-    env_file: .env
-    environment:
-      - MONGO_USERNAME=$MONGO_USERNAME
-      - MONGO_PASSWORD=$MONGO_PASSWORD
-      - MONGO_HOSTNAME=$MONGO_HOSTNAME
-      - MONGO_PORT=$MONGO_PORT
-      - MONGO_DB=$MONGO_DB
-    ports:
-            - "27018:27017"
-    volumes:
-            - .:/data/db
-              #           - mongodb_data_container:/data/db
-
-
-  nginx:
-    build:
-      context: nginx
-      dockerfile: Dockerfile
-    image: nginx:latest
-    container_name: webserver
+    networks:
+      - app-network
+    depends_on:
+      - mongodb
+  webserver:
+    image: nginx:alpine
     restart: unless-stopped
-    environment:
-      APP_ENV: "prod"
-      APP_NAME: "webserver"
-      APP_DEBUG: "true"
-      SERVICE_NAME: "webserver"
     ports:
       - "80:80"
-      - "443:443"
     volumes:
-      - .:/home/higorpsilva/Projects/ezops-test-higorsilva/nodejs/nginx/conf.d
+      - ./nginx/conf.d/:/etc/nginx/conf.d
+    depends_on:
+      - nodejs
+    networks:
+      - app-network
+  mongodb:
+    image: mongo
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
+    volumes:
+      - /data/db
+    networks:
+      - app-network
+networks:
+  app-network:
+    driver: bridge
