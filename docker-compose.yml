@@ -11,9 +11,10 @@ services:
       - MONGO_PORT=$MONGO_PORT
       - MONGO_DB=$MONGO_DB
     networks:
-      - app-network
+      - net-root
     depends_on:
       - mongodb
+    
 
   webserver:
     image: nginx:alpine
@@ -25,19 +26,22 @@ services:
     depends_on:
       - nodejs
     networks:
-      - app-network
+      - net-root
   mongodb:
     image: mongo
     restart: unless-stopped
     env_file: .env
     environment:
-      - MONGO_USERNAME=$MONGO_USERNAME
-      - MONGO_PASSWORD=$MONGO_PASSWORD
+      - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
+      - MONGO_INITDB_ROOT_DB=$MONGO_DB
+    ports:
+      - 27017:27017
     volumes:
       - /data/db
     networks:
-      - app-network
+      - net-root
 
 networks:
-  app-network:
+  net-root:
     driver: bridge
