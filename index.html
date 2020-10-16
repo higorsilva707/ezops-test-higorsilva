@@ -67,17 +67,17 @@
     }
 
     function getMessages() {
-      $.get('http://0.0.0.0/messages', (data) => {
+      $.get(`${url}/messages`, (data) => {
         data.forEach(addMessages);
       })
     }
 
     function sendMessage(message) {
-      $.post('http://0.0.0.0/messages', message)
+      $.post(`${url}/messages`, message)
     }
 
     function deleteMessages() {
-      $.post(`http://0.0.0.0/messages/clear`)
+      $.post(`${url}/messages/clear`)
     }
   </script>
 </body>
