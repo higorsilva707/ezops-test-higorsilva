@@ -15,7 +15,7 @@ var Message = mongoose.model('Message',{
   message : String
 })
 
-/*
+
 const {
   MONGO_USERNAME,
   MONGO_PASSWORD,
@@ -26,7 +26,7 @@ const {
 
 const dbUrl = `mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_DB}?retryWrites=true&w=majority`;
 console.log(dbUrl);
-*/
+
 const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -35,7 +35,7 @@ const options = {
 
 
 //var dbUrl = 'mongodb://amkurian:amkurian1@ds257981.mlab.com:57981/simple-chat'
-var dbUrl = 'mongodb+srv://admin:25081963a@cluster-ezops.aivkn.mongodb.net/<simple-chat>?retryWrites=true&w=majority'
+//var dbUrl = 'mongodb+srv://admin:25081963a@cluster-ezops.aivkn.mongodb.net/<simple-chat>?retryWrites=true&w=majority'
 
 app.get('/messages', (req, res) => {
   Message.find({},(err, messages)=> {
