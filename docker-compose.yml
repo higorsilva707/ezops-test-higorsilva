@@ -1,0 +1,58 @@
+version: '3'
+services:
+  nodejs:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - MONGO_USERNAME=$MONGO_USERNAME
+      - MONGO_PASSWORD=$MONGO_PASSWORD
+      - MONGO_HOSTNAME=mongodb
+      - MONGO_PORT=$MONGO_PORT
+      - MONGO_DB=$MONGO_DB
+    networks:
+      - app-network
+    depends_on:
+      - mongodb
+
+  webserver:
+    image: nginx:alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx-conf:/etc/nginx/conf.d
+      # - web-root:/var/www/html
+      # - certbot-etc:/etc/letsencrypt
+      # - certbot-var:/var/lib/letsencrypt
+    depends_on:
+      - nodejs
+    networks:
+      - app-network
+
+    # certbot:
+    #   image: certbot/certbot
+    #   container_name: certbot
+    #   volumes:
+      #     - web-root:/var/www/html
+    #     - certbot-etc:/etc/letsencrypt
+    #     - certbot-var:/var/lib/letsencrypt
+    #   depends_on:
+    #     - webserver
+    #   command: certonly --webroot --webroot-path=/var/www/html --email alan@example.com --agree-tos --no-eff-email --staging -d example.com  -d www.example.com
+
+  mongodb:
+    image: mongo
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
+    volumes:
+      - /data/db
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
