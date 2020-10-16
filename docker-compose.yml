@@ -26,7 +26,6 @@ services:
       - nodejs
     networks:
       - app-network
-
   mongodb:
     image: mongo
     restart: unless-stopped
